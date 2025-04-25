@@ -1,39 +1,33 @@
 {
-	"last_changes": 1745441116.4921274, 
-	"all_titles": ["TEST TITLE", "ALSO TEST TITLE"], 
-	"journal": 
-	{
-		"23.04.2025":
-		{
-			"1745441116":
-			{
-				"time": 1745441116.4921274,
-				"title": "TEST TITLE",
-				"message": "some text"
-			},
-
-			"1745441100":
-			{
-				"time": 1745441116.4921274,
-				"title": "ALSO TEST TITLE",
-				"message": "some text second"
-			}
-		},
-		"22.04.2025":
-		{
-			"1745441116":
-			{
-				"time": 1745441116.4921274,
-				"title": "TEST TITLE",
-				"message": "some text"
-			},
-
-			"1745441100":
-			{
-				"time": 1745441116.4921274,
-				"title": "ALSO TEST TITLE",
-				"message": "some text second"
-			}
-		}
-	}
+  "last_changes": 1745441116,
+  "all_titles": ["TEST TITLE", "ALSO TEST TITLE"],
+  "journal":
+  {
+    "23.04.2025":
+    [
+        {
+            "time": 1745441116,
+            "title": "TEST TITLE",
+            "message": "some text"
+        },
+        {
+            "time": 1745441116,
+            "title": "ALSO TEST TITLE",
+            "message": "some text second"
+        }
+    ],
+    "22.04.2025":
+    [
+        {
+            "time": 1745441116,
+            "title": "TEST TITLE",
+            "message": "some text"
+        },
+        {
+            "time": 1745441116,
+            "title": "ALSO TEST TITLE",
+            "message": "some text second"
+        }
+    ]
+  }
 }

@@ -29,11 +29,12 @@ class Journal:
     
     def __init__(self) -> None:
         
-        self.dates: list[] = []
-        self.titles: list[str]: []
+        self.dates: list[str] = []
+        self.titles: list[str] = []
         self.ready_to_work = False
         
-    def sutup(self) -> None:
+    def setup(self) -> None:
+        ...
         
             
         

@@ -8,7 +8,7 @@ class Loader:
     
     def __init__(self) -> None:
         self.save_data_path: str = "journal/storage/storage.json"
-        self.buff: dict[any] = self._check_storage()
+        self.buff: dict = self._check_storage()
     
     def _check_storage(self) -> dict:
         """ Проверка всего и вся на сохранность хранилища """
@@ -18,30 +18,42 @@ class Loader:
         if not os.path.exists(self.save_data_path):
             is_alright = False
             error_message = "FileNotFoundError"
-        if not os.path.isfile(self.save_data_path): is_alright = False, "NotFileError"
+        if not os.path.isfile(self.save_data_path): is_alright, error_message = False, "NotFileError"
         
-        with open(self.save_data_path, 'r', encoding='utf-8') as file:
-            if type(cheked_data := json.load(file)) != dict:
+        with open(self.save_data_path, 'r') as file:
+            try:
+                checked_data = json.load(file)
+            except json.decoder.JSONDecodeError:
+                self._create_new_storage()
+                print({'is_alright': False, 'error_message': "EmptyFileError"})
+                return {'is_alright': False, 'error_message': "EmptyFileError"}
+            if type(checked_data) != dict:
                 is_alright = False
                 error_message = "WrongTypeOfDataError"
+            # else:
+            #     is_alright = False
+            #     error_message = "EmptyFileError"
+            #     print({'is_alright': is_alright, 'error_message': error_message})
+            #     self._create_new_storage()
+            #     return {'is_alright': is_alright, 'error_message': error_message}
             
-        if list(cheked_data.keys()) != ['last_changes', 'all_titles', 'journal']:
+        if list(checked_data.keys()) != ['last_changes', 'all_titles', 'journal']:
             is_alright = False
             error_message = "KeysError"
-        if type(cheked_data['last_changes']) != float:
+        if type(checked_data['last_changes']) != int:
             is_alright = False
             error_message = "DateTypeError"
-        if type(cheked_data['all_titles']) != list:
+        if type(checked_data['all_titles']) != list:
             is_alright = False
             error_message = "TitleListTypeError"
-        if len(cheked_data['all_titles']) > 0:
-            if type (cheked_data['all_titles'][0]) != str:
+        if len(checked_data['all_titles']) > 0:
+            if type (checked_data['all_titles'][0]) != str:
                 is_alright = False
                 error_message = "WrongTypeOfTitlesError"
-        if type(cheked_data['journal']) != dict:
+        if type(checked_data['journal']) != dict:
             is_alright = False
             error_message = "JournalListTypeError"
-            print(type(cheked_data['journal']))
+            print(type(checked_data['journal']))
         
         if not is_alright:
             self._create_new_storage()
@@ -59,11 +71,11 @@ class Loader:
             json.dump(data, file)
     
     
-    def update_storage_status(self) -> dict[any]:
+    def update_storage_status(self) -> dict:
         self.buff = self._check_storage()
         return self.buff
     
-    def get_last_change(self) -> str:
+    def get_last_change(self) -> float:
         with open(self.save_data_path, 'r', encoding='utf-8') as file:
             last_changes = float(json.load(file)['last_changes'])
         return last_changes
@@ -84,7 +96,7 @@ class Loader:
         if date:
             return data[date]
         if title:
-            return {date_id: { _time: _data for _time, _data in message_data.items() if _data['title'] == title } for date_id, message_data in data.items()}
+            return {date_id: [_data for _data in messages_list if _data['title'] == title ] for date_id, messages_list in data.items() }
             
             
     

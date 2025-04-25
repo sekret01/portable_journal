@@ -1,3 +1,5 @@
+import time
+
 from .file_manager import Loader, Saver
 
 class Sorter:
@@ -34,7 +36,7 @@ class Sorter:
 
         if title is None and date is None: return data
         if date:
-            return data[date]
+            return {date: data[date]}
         if title:
             return {date_id: [_data for _data in messages_list if _data['title'] == title] for date_id, messages_list in
                     data.items()}
@@ -75,9 +77,10 @@ class Sorter:
 
     def _build_struct(self, new_data: dict, all_data: dict) -> dict:
         """ Построение новой структуры для записи """
+        dd = time.localtime(new_data['time'])
 
         _title = new_data['title']
-        _date = new_data['date']
+        _date = f"{dd.tm_mday}.{dd.tm_mon}.{dd.tm_year}"
         _time = new_data['time']
         _message = new_data['message']
 

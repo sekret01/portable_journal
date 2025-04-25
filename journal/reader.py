@@ -14,7 +14,7 @@ class Reader:
         message: str = ""
         print("начало записи\n")
         while line := input(""):
-            message += line
+            message += line + '\n'
         print("\nконец записи")
 
         _delete: str = input("Для отмены введите [yes]: ")
@@ -22,13 +22,14 @@ class Reader:
             return None
         
         title = title or "запись"
-        date = time.time()
+        _time = int(time.time())
         
-        return {'date': date, 'title': title, 'message': message}
+        return {'time': _time, 'title': title, 'message': message}
 
     def read_command(self) -> str | None:
         command = input("> ").lower()
-        if command in _commands:
-            return command
-        return None
-        
+        return command
+
+        # if command in _commands:
+        #     return command
+        # return None

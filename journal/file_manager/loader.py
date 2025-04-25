@@ -25,7 +25,6 @@ class Loader:
                 checked_data = json.load(file)
             except json.decoder.JSONDecodeError:
                 self._create_new_storage()
-                print({'is_alright': False, 'error_message': "EmptyFileError"})
                 return {'is_alright': False, 'error_message': "EmptyFileError"}
             if type(checked_data) != dict:
                 is_alright = False
@@ -47,18 +46,16 @@ class Loader:
         if type(checked_data['journal']) != dict:
             is_alright = False
             error_message = "JournalListTypeError"
-            print(type(checked_data['journal']))
         
         if not is_alright:
             self._create_new_storage()
-        
-        print({'is_alright': is_alright, 'error_message': error_message})
+
         return {'is_alright': is_alright, 'error_message': error_message}
         
     def _create_new_storage(self) -> None:
         with open(self.save_data_path, 'w', encoding='utf-8') as file:
             data = {
-                    'last_changes': time.time(),
+                    'last_changes': int(time.time()),
                     'all_titles': [],
                     'journal': {}
                    }

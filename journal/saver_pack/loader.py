@@ -25,7 +25,6 @@ class Loader:
                 checked_data = json.load(file)
             except json.decoder.JSONDecodeError:
                 self._create_new_storage()
-                print({'is_alright': False, 'error_message': "EmptyFileError"})
                 return {'is_alright': False, 'error_message': "EmptyFileError"}
             if type(checked_data) != dict:
                 is_alright = False
@@ -51,8 +50,7 @@ class Loader:
         
         if not is_alright:
             self._create_new_storage()
-        
-        print({'is_alright': is_alright, 'error_message': error_message})
+
         return {'is_alright': is_alright, 'error_message': error_message}
         
     def _create_new_storage(self) -> None:

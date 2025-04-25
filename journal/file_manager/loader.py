@@ -30,12 +30,6 @@ class Loader:
             if type(checked_data) != dict:
                 is_alright = False
                 error_message = "WrongTypeOfDataError"
-            # else:
-            #     is_alright = False
-            #     error_message = "EmptyFileError"
-            #     print({'is_alright': is_alright, 'error_message': error_message})
-            #     self._create_new_storage()
-            #     return {'is_alright': is_alright, 'error_message': error_message}
             
         if list(checked_data.keys()) != ['last_changes', 'all_titles', 'journal']:
             is_alright = False
@@ -74,29 +68,8 @@ class Loader:
     def update_storage_status(self) -> dict:
         self.buff = self._check_storage()
         return self.buff
-    
-    def get_last_change(self) -> float:
+
+    def get_all_data(self) -> dict:
         with open(self.save_data_path, 'r', encoding='utf-8') as file:
-            last_changes = float(json.load(file)['last_changes'])
-        return last_changes
-    
-    def get_titles(self):
-        with open(self.save_data_path, 'r', encoding='utf-8') as file:
-            titles = json.load(file)['all_titles']
-        return titles
-    
-    def get_journal(self,
-                    title: str | None = None,
-                    date: str | None = None
-                    ):
-        with open(self.save_data_path, 'r', encoding='utf-8') as file:
-            data = json.load(file)['journal']
-        
-        if title is None and date is None: return data
-        if date:
-            return data[date]
-        if title:
-            return {date_id: [_data for _data in messages_list if _data['title'] == title ] for date_id, messages_list in data.items() }
-            
-            
-    
+            data = json.load(file)
+        return data

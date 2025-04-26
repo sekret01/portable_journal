@@ -1,6 +1,6 @@
 from .sorter import Sorter
-from .reader import Reader
-from .writer import Writer
+from .printing import Reader
+from .printing import Writer
 import os
 import time
 
@@ -46,7 +46,7 @@ class Console:
     def welcome(self) -> bool:
         """ Стартовое сообщение программы """
         print(f"JOURNAL\nВерсия: {VERSION}\nВладелец: {AUTHOR}")
-        all_right, error_message = self.sorter.loader.buff.values()
+        all_right, error_message = self.sorter.encryptor.load_buff.values()
         print("\nЗагрузка данных")
         for i in range(50):
             print(f"\r[{'#'*(i+1):<50}]", end='')

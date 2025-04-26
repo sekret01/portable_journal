@@ -1,6 +1,7 @@
 import time
 
 from .file_manager import Loader, Saver
+from .encryptor import Encryptor
 
 class Sorter:
     """
@@ -10,8 +11,9 @@ class Sorter:
     """
 
     def __init__(self):
-        self.loader = Loader()
-        self.saver = Saver()
+        # self.loader = Loader()
+        # self.saver = Saver()
+        self.encryptor = Encryptor()
 
     def get_journal(self,
                     title: str | None = None,
@@ -32,7 +34,7 @@ class Sorter:
          - без фильтров - будут возвращены все записи
            >> >> get_journal()
         """
-        data = self.loader.get_all_data()['journal']
+        data = self.encryptor.load()['journal']
 
         if title is None and date is None: return data
         if date:
@@ -43,12 +45,12 @@ class Sorter:
 
     def get_last_change(self) -> int:
         """ Получение даты последних изменений (в секундах) """
-        last_changes = int(self.loader.get_all_data()['last_changes'])
+        last_changes = int(self.encryptor.load()['last_changes'])
         return last_changes
 
     def get_titles(self) -> list[str]:
         """ Получение всех возможных заголовков """
-        titles = self.loader.get_all_data()['all_titles']
+        titles = self.encryptor.load()['all_titles']
         return titles
 
     def save_new(self, new_data: dict) -> None:
@@ -71,9 +73,9 @@ class Sorter:
         Дата изменения будет перезаписана на time в сообщении.
         """
 
-        all_data = self.loader.get_all_data()
+        all_data = self.encryptor.load()
         update_data = self._build_struct(new_data, all_data)
-        self.saver.save_new_data(update_data)
+        self.encryptor.save(update_data)
 
     def _build_struct(self, new_data: dict, all_data: dict) -> dict:
         """ Построение новой структуры для записи """

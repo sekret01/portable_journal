@@ -1,7 +1,7 @@
 import time
+from .file_manager import Encryptor
+# from .file_manager import Loader, Saver
 
-from .file_manager import Loader, Saver
-from .encryptor import Encryptor
 
 class Sorter:
     """

@@ -1,5 +1,5 @@
-from .file_manager import Loader
-from .file_manager import Saver
+from .loader import Loader
+from .saver import Saver
 
 
 class Encryptor:

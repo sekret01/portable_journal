@@ -38,7 +38,7 @@ class Sorter:
 
         if title is None and date is None: return data
         if date:
-            return {date: data[date]}
+            return {date: data['date']}
         if title:
             return {date_id: [_data for _data in messages_list if _data['title'] == title] for date_id, messages_list in
                     data.items()}

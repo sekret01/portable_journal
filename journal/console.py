@@ -1,46 +1,41 @@
 from .sorter import Sorter
 from .printing import Reader
 from .printing import Writer
+from .command_processing import Distributor
 import os
 import time
 
-VERSION = "0.1.1"
+
+VERSION = "0.2.0"
 AUTHOR = "Sekret"
 ERRORS = {
 
 }
 
-def cls():
-    os.system('cls')
+
 
 
 class Console:
     """ Класс-интерфейс для взаимодействия пользователя с журналом """
 
     def __init__(self):
+        self.distributor = Distributor()
         self.sorter = Sorter()
         self.reader = Reader()
-        self.writer = Writer()
+        # self.writer = Writer()
 
     def start(self):
         start_status = self.welcome()
         while True:
-            cls()
+            self.reader.cls()
             print("> запись - новая запись\n> журнал - вывод записей (возможна фильтрация)\n> выход - выход из программы\n")
             command = self.reader.read_command().lower()
+            if command.lower() == "выход": break
 
-            if command == "выход":
-                break
-
-            if command == "запись":
-                cls()
-                if not (new_message := self.reader.read_record()) is None:
-                    self.sorter.save_new(new_message)
-
-            if command == "журнал":
-                cls()
-                self.writer.write_data()
-                input()
+            res_func: callable = self.distributor.set_command(command=command)
+            # self.reader.cls()
+            if res_func:
+                res_func()
 
 
     def welcome(self) -> bool:

@@ -77,18 +77,21 @@ def test_Loader_get_all_journal():
 def test_Loader_get_date_journal():
     loader = Loader()
     res = loader.get_journal(date="23.04.2025")
-    right_data = [
-        {
-            "time": 1745441116.4921274,
-            "title": "TEST TITLE",
-            "message": "some text"
-        },
-        {
-            "time": 1745441116.4921274,
-            "title": "ALSO TEST TITLE",
-            "message": "some text second"
-        }
-    ]
+    right_data = {
+		"23.04.2025":
+		[
+			{
+				"time": 1745441116.4921274,
+				"title": "TEST TITLE",
+				"message": "some text"
+			},
+			{
+				"time": 1745441116.4921274,
+				"title": "ALSO TEST TITLE",
+				"message": "some text second"
+			}
+		]
+	}
     assert(res) == right_data
     
 def test_Loader_get_title_journal():

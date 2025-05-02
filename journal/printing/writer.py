@@ -14,6 +14,7 @@ class Writer:
         data = self.sorter.get_journal(title=title, date=date)
 
         for date, messages in data.items():
+            if len(messages) == 0: continue
             print(f"ДАТА {date}")
             for mes in messages:
                 dd = time.localtime(mes['time'])

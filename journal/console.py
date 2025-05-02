@@ -2,11 +2,12 @@ from .sorter import Sorter
 from .printing import Reader
 from .printing import Writer
 from .command_processing import Distributor
+from .brush import Brush, brush_start
 import os
 import time
 
 
-VERSION = "0.2.0"
+VERSION = "0.2.1"
 AUTHOR = "Sekret"
 ERRORS = {
 
@@ -25,7 +26,9 @@ class Console:
         # self.writer = Writer()
 
     def start(self):
+        brush_start()
         start_status = self.welcome()
+
         while True:
             self.reader.cls()
             print("> запись - новая запись\n> журнал - вывод записей (возможна фильтрация)\n> выход - выход из программы\n")
@@ -40,7 +43,7 @@ class Console:
 
     def welcome(self) -> bool:
         """ Стартовое сообщение программы """
-        print(f"JOURNAL\nВерсия: {VERSION}\nВладелец: {AUTHOR}")
+        print(f"JOURNAL\nВерсия: {Brush.yellow(VERSION)}\nВладелец: {Brush.yellow(AUTHOR)}")
         all_right, error_message = self.sorter.encryptor.load_buff.values()
         print("\nЗагрузка данных")
         for i in range(50):

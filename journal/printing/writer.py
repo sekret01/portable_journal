@@ -1,4 +1,5 @@
 from ..sorter import Sorter
+from ..brush import Brush, brush_start
 import time
 
 class Writer:
@@ -15,11 +16,11 @@ class Writer:
 
         for date, messages in data.items():
             if len(messages) == 0: continue
-            print(f"ДАТА {date}")
+            print(f"ДАТА {Brush.blue(date)}")
             for mes in messages:
                 dd = time.localtime(mes['time'])
                 print()
-                print(f"запись от {dd.tm_hour}:{dd.tm_min}:{dd.tm_sec}")
-                print(f"[{mes['title']}]")
+                print(f"запись от {Brush.gray(f"{dd.tm_hour}:{dd.tm_min}:{dd.tm_sec}")}")
+                print(f"[{Brush.yellow(mes['title'])}]")
                 print(f"{mes['message']}")
-            print("\n\n")
+            print("\n")
